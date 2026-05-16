@@ -1,1 +1,35 @@
-.wdl-library{margin:1em 0}.wdl-library-controls{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:12px}.wdl-search-label{display:block;font-size:13px;margin-bottom:4px}.wdl-search-input{min-width:280px;max-width:420px;width:100%;padding:8px;border:1px solid #ccc;border-radius:4px}.wdl-view-toggle{display:flex;gap:6px}.wdl-toggle-button{padding:8px 12px;border:1px solid #2c5aa0;background:#fff;color:#2c5aa0;cursor:pointer}.wdl-toggle-button.is-active{background:#2c5aa0;color:#fff}.wdl-view-container{display:none}.wdl-view-container.is-active{display:block}.wdl-document-table{width:100%;border-collapse:collapse}.wdl-document-table th,.wdl-document-table td{border:1px solid #ddd;padding:8px}.wdl-thumb-cell img,.wdl-document-card img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border:1px solid #eee;max-width:120px}.wdl-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}.wdl-document-card{border:1px solid #ddd;padding:12px}.wdl-card-actions{display:flex;gap:8px;flex-wrap:wrap}.wdl-button{display:inline-block;padding:6px 10px;background:#2c5aa0;color:#fff;text-decoration:none}.wdl-document-icon{display:inline-block;background:#f1f1f1;padding:8px}.wdl-compact-list{list-style:none;padding:0}.wdl-categories-tree .wdl-category-item{margin:6px 0}.wdl-no-results{padding:10px;border:1px solid #ddd;background:#fafafa;margin-top:10px}
+.wdl-library{margin:1rem 0;padding:1rem;background:#fff;border:1px solid #e6e9ef;border-radius:14px;box-shadow:0 8px 28px rgba(16,24,40,.06)}
+.wdl-library-controls{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px}
+.wdl-search-wrap{min-width:280px;flex:1}
+.wdl-search-label{display:block;font-size:13px;color:#475467;margin-bottom:6px}
+.wdl-search-input{width:100%;padding:10px 12px;border:1px solid #d0d5dd;border-radius:10px;background:#fff}
+.wdl-view-toggle{display:flex;gap:8px}
+.wdl-toggle-button{width:40px;height:40px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:#344054;cursor:pointer;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center}
+.wdl-toggle-button.is-active{background:#2c5aa0;color:#fff;border-color:#2c5aa0;box-shadow:0 4px 16px rgba(44,90,160,.35)}
+.wdl-view-container{display:none}.wdl-view-container.is-active{display:block}
+.wdl-document-table{width:100%;border-collapse:collapse}
+.wdl-document-table th,.wdl-document-table td{border-bottom:1px solid #eaecf0;padding:12px;vertical-align:top}
+.wdl-document-table th{text-align:left;font-size:13px;color:#667085;font-weight:600}
+.wdl-doc-main{display:flex;gap:10px;align-items:center}
+.wdl-doc-thumb img,.wdl-document-card img{width:68px;height:88px;object-fit:cover;border:1px solid #eaecf0;border-radius:8px;background:#f8fafc}
+.wdl-actions-cell{white-space:nowrap}
+.wdl-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.wdl-document-card{border:1px solid #eaecf0;border-radius:14px;padding:14px;background:#fff;box-shadow:0 6px 20px rgba(16,24,40,.04)}
+.wdl-document-card h3{margin:10px 0 8px;font-size:18px}
+.wdl-document-card p{margin:0 0 12px;color:#475467}
+.wdl-card-actions{display:flex;gap:8px;flex-wrap:wrap}
+.wdl-button{display:inline-block;padding:8px 12px;background:#2c5aa0;color:#fff;text-decoration:none;border-radius:8px;font-weight:600}
+.wdl-button:hover{opacity:.92}
+.wdl-no-results{padding:10px;border:1px solid #eaecf0;background:#f8fafc;margin-top:10px;border-radius:10px}
+
+.wdl-single{max-width:980px;margin:1rem auto;padding:1rem;border:1px solid #eaecf0;border-radius:16px;background:#fff;display:flex;gap:20px;align-items:flex-start;box-shadow:0 8px 28px rgba(16,24,40,.06)}
+.wdl-single-cover{margin-left:auto;order:2;flex:0 0 180px}
+.wdl-single-cover img{width:100%;max-width:180px;height:auto;border-radius:10px;border:1px solid #eaecf0;display:block}
+.wdl-single-content{order:1;flex:1}
+.wdl-single-content h1{margin-top:0}
+.wdl-single-description{font-size:1.05rem;color:#475467;margin-bottom:12px}
+
+@media (max-width:720px){
+.wdl-single{flex-direction:column}
+.wdl-single-cover{order:0;margin:0}
+}
