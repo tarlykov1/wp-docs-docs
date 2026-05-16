@@ -1,0 +1,1 @@
+(function(blocks,element){blocks.registerBlockType('wdl/document-library',{title:'Библиотека документов',icon:'media-document',category:'widgets',attributes:{view:{type:'string',default:'table'}},edit:function(){return element.createElement('p',{},'Блок: Библиотека документов (серверный рендер)');},save:function(){return null;}});})(window.wp.blocks,window.wp.element);

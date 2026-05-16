@@ -1,0 +1,3 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-document-library-ru 1.0.0\n"

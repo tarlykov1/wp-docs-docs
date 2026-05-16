@@ -1,0 +1,1 @@
+<div class="wdl-categories-tree"><?php $terms=get_terms(array('taxonomy'=>'wdl_document_category','hide_empty'=>false)); foreach($terms as $t){ echo '<div class="wdl-category-item"><strong>'.esc_html($t->name).'</strong></div>'; }?></div>
