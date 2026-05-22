@@ -1,13 +1,19 @@
 <div class="wdl-library" data-default-view="<?php echo esc_attr($data['atts']['view']); ?>">
     <div class="wdl-library-controls">
         <?php if ('yes' === $data['atts']['show_search']) : ?>
-            <label class="wdl-search-label" for="wdl-search-input">Поиск документов</label>
-            <input id="wdl-search-input" class="wdl-search-input" type="search" placeholder="Введите название, категорию, формат или версию" />
+            <div class="wdl-search-wrap">
+                <label class="wdl-search-label" for="wdl-search-input">Поиск документов</label>
+                <input id="wdl-search-input" class="wdl-search-input" type="search" placeholder="Введите название или описание" />
+            </div>
         <?php endif; ?>
 
         <div class="wdl-view-toggle" role="group" aria-label="Вид отображения">
-            <button type="button" class="wdl-toggle-button" data-view="table">Таблица</button>
-            <button type="button" class="wdl-toggle-button" data-view="cards">Карточки</button>
+            <button type="button" class="wdl-toggle-button" data-view="table" title="Показать в виде таблицы" aria-label="Таблица">
+                <span aria-hidden="true">☷</span>
+            </button>
+            <button type="button" class="wdl-toggle-button" data-view="cards" title="Показать в виде карточек" aria-label="Карточки">
+                <span aria-hidden="true">▦</span>
+            </button>
         </div>
     </div>
 
