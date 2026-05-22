@@ -1,1 +1,31 @@
-<table class="wdl-document-table"><thead><tr><th></th><th>Название</th><th>Категория</th><th>Формат</th><th>Версия</th><th>Дата</th><th></th></tr></thead><tbody><?php if($data['query']->have_posts()): while($data['query']->have_posts()):$data['query']->the_post(); $u=get_post_meta(get_the_ID(),'_wdl_file_url',true); $category=wp_strip_all_tags(get_the_term_list(get_the_ID(),'wdl_document_category','',', ')); $format=strtoupper($data['helpers']->get_file_ext($u)); $version=get_post_meta(get_the_ID(),'_wdl_version',true); ?><tr class="wdl-item" data-search="<?php echo esc_attr(strtolower(trim(get_the_title().' '.$category.' '.$format.' '.$version))); ?>"><td class="wdl-thumb-cell"><?php echo $data['helpers']->get_thumb_or_icon(get_the_ID(),$u,'medium'); ?></td><td><?php the_title();?></td><td><?php echo esc_html($category);?></td><td><?php echo esc_html($format);?></td><td><?php echo esc_html($version);?></td><td><?php echo esc_html(get_post_meta(get_the_ID(),'_wdl_updated_date',true));?></td><td><?php if($u):?><a class="wdl-button wdl-button-open" href="<?php echo esc_url(get_permalink());?>">Открыть</a> <a class="wdl-button wdl-button-download" href="<?php echo esc_url($u);?>" target="_blank" rel="noopener">Скачать</a><?php endif;?></td></tr><?php endwhile; else: ?><tr><td colspan="7">Документы не найдены</td></tr><?php endif; ?></tbody></table>
+<div class="wdl-document-list">
+    <?php if ($data['query']->have_posts()) : while ($data['query']->have_posts()) : $data['query']->the_post();
+        $u = get_post_meta(get_the_ID(), '_wdl_file_url', true);
+        $description = get_post_meta(get_the_ID(), '_wdl_card_description', true);
+        $ext = strtoupper($data['helpers']->get_file_ext($u));
+        $file_id = absint(get_post_meta(get_the_ID(), '_wdl_file_id', true));
+        $size_label = '';
+        if ($file_id) {
+            $file_path = get_attached_file($file_id);
+            if ($file_path && file_exists($file_path)) {
+                $size_label = size_format(filesize($file_path));
+            }
+        }
+        ?>
+        <article class="wdl-item" data-search="<?php echo esc_attr(strtolower(trim(get_the_title() . ' ' . $description . ' ' . $ext . ' ' . $size_label))); ?>">
+            <div class="wdl-doc-row">
+                <div class="wdl-doc-thumb"><?php echo $data['helpers']->get_thumb_or_icon(get_the_ID(), $u, 'medium'); ?></div>
+                <div class="wdl-doc-content">
+                    <h3 class="wdl-doc-title"><?php the_title(); ?></h3>
+                    <p class="wdl-doc-description"><?php echo esc_html($description); ?></p>
+                    <p class="wdl-doc-meta"><?php echo esc_html(trim($ext . ($size_label ? ' • ' . $size_label : ''))); ?></p>
+                </div>
+                <?php if ($u) : ?>
+                    <div class="wdl-doc-actions"><a class="wdl-button wdl-button-download wdl-button-small" href="<?php echo esc_url($u); ?>" target="_blank" rel="noopener">Скачать</a></div>
+                <?php endif; ?>
+            </div>
+        </article>
+    <?php endwhile; else : ?>
+        <div>Документы не найдены</div>
+    <?php endif; ?>
+</div>
