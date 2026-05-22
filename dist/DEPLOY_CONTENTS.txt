@@ -1,0 +1,27 @@
+Archive:  dist/wp-document-library-ru.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+      684  2026-05-22 17:56   wp-document-library-ru.php
+        0  2026-05-22 17:56   assets/
+        0  2026-05-22 19:35   assets/css/
+       34  2026-05-22 17:56   assets/css/admin.css
+     2955  2026-05-22 19:35   assets/css/frontend.css
+        0  2026-05-22 17:56   assets/js/
+      515  2026-05-22 17:56   assets/js/admin.js
+      431  2026-05-22 17:56   assets/js/block.js
+     1430  2026-05-22 17:56   assets/js/frontend.js
+        0  2026-05-22 19:35   includes/
+      781  2026-05-22 17:56   includes/class-wdl-frontend.php
+      627  2026-05-22 17:56   includes/class-wdl-taxonomies.php
+     2241  2026-05-22 19:35   includes/class-wdl-settings.php
+      816  2026-05-22 17:56   includes/class-wdl-blocks.php
+     2172  2026-05-22 17:56   includes/class-wdl-meta-boxes.php
+     1551  2026-05-22 17:56   includes/class-wdl-shortcodes.php
+     1538  2026-05-22 17:56   includes/class-wdl-widget.php
+      955  2026-05-22 17:56   includes/class-wdl-admin-pages.php
+     2348  2026-05-22 17:56   includes/class-wdl-plugin.php
+     1087  2026-05-22 17:56   includes/class-wdl-helpers.php
+      819  2026-05-22 17:56   includes/class-wdl-post-types.php
+      123  2026-05-22 17:56   readme.txt
+---------                     -------
+    21107                     22 files
