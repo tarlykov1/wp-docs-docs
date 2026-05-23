@@ -2,7 +2,7 @@
 if (! defined('ABSPATH')) { exit; }
 class WDL_Frontend {
     private $helpers; private $settings;
-    public function __construct($helpers,$settings){$this->helpers=$helpers;$this->settings=$settings; add_action('wp_enqueue_scripts',array($this,'assets')); add_filter('template_include',array($this,'single_template'),99); add_filter('the_content',array($this,'single_content_fallback'),20); add_action('wp_footer',array($this,'debug_post_type_comment')); }
+    public function __construct($helpers,$settings){$this->helpers=$helpers;$this->settings=$settings; add_action('wp_enqueue_scripts',array($this,'assets')); add_filter('template_include',array($this,'single_template'),99); add_filter('the_content',array($this,'single_content_fallback'),20); if (defined('WP_DEBUG') && WP_DEBUG) { add_action('wp_footer',array($this,'debug_post_type_comment')); } }
     public function assets(){ wp_enqueue_style('wdl-frontend',WDL_PLUGIN_URL.'assets/css/frontend.css',array(),WDL_PLUGIN_VERSION); wp_enqueue_script('wdl-frontend',WDL_PLUGIN_URL.'assets/js/frontend.js',array('jquery'),WDL_PLUGIN_VERSION,true); }
     public function single_template($template){
         if (! is_singular() || ! WDL_Settings::get_option('enable_single',1)) {
@@ -10,20 +10,20 @@ class WDL_Frontend {
         }
 
         $post_type = get_post_type();
-        error_log('FONDPP template_include post_type: ' . (string) $post_type);
+        if (defined('WP_DEBUG') && WP_DEBUG) { error_log('FONDPP template_include post_type: ' . (string) $post_type); }
 
         if (! $this->is_document_post_type($post_type)) {
             return $template;
         }
 
         $plugin_template = WDL_PLUGIN_DIR . 'templates/single-document.php';
-        error_log('FONDPP plugin template path: ' . $plugin_template);
+        if (defined('WP_DEBUG') && WP_DEBUG) { error_log('FONDPP plugin template path: ' . $plugin_template); }
         if (file_exists($plugin_template)) {
-            error_log('FONDPP single document template loaded');
+            if (defined('WP_DEBUG') && WP_DEBUG) { error_log('FONDPP single document template loaded'); }
             return $plugin_template;
         }
 
-        error_log('FONDPP single document template not found');
+        if (defined('WP_DEBUG') && WP_DEBUG) { error_log('FONDPP single document template not found'); }
 
         return $template;
     }
@@ -38,8 +38,13 @@ class WDL_Frontend {
             return $content;
         }
 
+        $partial = WDL_PLUGIN_DIR . 'templates/parts/single-document-content.php';
+        if (! file_exists($partial)) {
+            return $content;
+        }
+
         ob_start();
-        include WDL_PLUGIN_DIR . 'templates/parts/single-document-content.php';
+        include $partial;
         return (string) ob_get_clean();
     }
 
@@ -48,7 +53,7 @@ class WDL_Frontend {
     }
 
     public function debug_post_type_comment(){
-        if (! is_singular()) {
+        if (! is_singular() || ! defined('WP_DEBUG') || ! WP_DEBUG) {
             return;
         }
 
