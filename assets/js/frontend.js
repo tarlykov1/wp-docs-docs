@@ -3,7 +3,7 @@ jQuery(function($){
 
     $('.wdl-library').each(function(){
         var $library = $(this);
-        var defaultView = $library.data('default-view') || 'table';
+        var defaultView = localStorage.getItem('wdl-view') || $library.data('default-view') || 'table';
         var $containers = $library.find('.wdl-view-container');
         var $buttons = $library.find('.wdl-toggle-button');
         var $search = $library.find('.wdl-search-input');
@@ -26,7 +26,7 @@ jQuery(function($){
             $noResults.prop('hidden', matched !== 0);
         }
 
-        $buttons.on('click', function(){ switchView($(this).data('view')); });
+        $buttons.on('click', function(){ var v=$(this).data('view'); switchView(v); try{localStorage.setItem('wdl-view',v);}catch(e){} });
         $search.on('input', filterItems);
 
         switchView(defaultView);
