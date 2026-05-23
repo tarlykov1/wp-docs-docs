@@ -1,4 +1,4 @@
-<div class="wdl-library" data-default-view="<?php echo esc_attr($data['atts']['view']); ?>">
+<div class="wdl-library" data-default-view="table">
     <div class="wdl-library-controls">
         <?php if ('yes' === $data['atts']['show_search']) : ?>
             <div class="wdl-search-wrap">
