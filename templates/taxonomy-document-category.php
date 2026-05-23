@@ -42,7 +42,7 @@ $data = array(
     <main id="main" class="site-main">
         <article class="inside-article">
             <div class="entry-content wdl-library-container">
-                <!-- WDL CATEGORY TEMPLATE VERSION 1.1.6 -->
+                <!-- WDL CATEGORY TEMPLATE VERSION 1.1.7 -->
         <nav class="wdl-breadcrumbs" aria-label="Хлебные крошки">
             <a href="<?php echo esc_url($library_url); ?>">Библиотека документов</a> / <?php echo esc_html($term->name); ?>
         </nav>
@@ -59,4 +59,5 @@ $data = array(
 </div>
 <?php
 wp_reset_postdata();
+get_sidebar();
 get_footer();
