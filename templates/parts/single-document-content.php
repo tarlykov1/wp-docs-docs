@@ -13,6 +13,7 @@ $file_id         = absint(get_post_meta($post_id, '_wdl_file_id', true));
 $file_url_meta   = get_post_meta($post_id, '_wdl_file_url', true);
 $file_url_id     = $file_id ? wp_get_attachment_url($file_id) : '';
 $file_url        = $file_url_id ? $file_url_id : $file_url_meta;
+$file_ext        = strtoupper(pathinfo((string) $file_url, PATHINFO_EXTENSION));
 $thumb_width     = max(80, absint(WDL_Settings::get_option('single_thumb_width', 160)));
 $thumb_height_op = WDL_Settings::get_option('single_thumb_height', 'auto');
 $thumb_height    = ('auto' === strtolower((string) $thumb_height_op)) ? 'auto' : max(80, absint($thumb_height_op));
@@ -29,7 +30,6 @@ $meta_rows = array_filter([
 ], static function ($v) { return '' !== (string) $v; });
 
 $file_name = '';
-$file_ext = strtoupper(wp_check_filetype((string) $file_url)['ext'] ?? '');
 $file_size = '';
 $file_uploaded = '';
 
@@ -57,6 +57,7 @@ $file_info_rows = array_filter([
     'Категория' => $category_name,
 ], static function ($v) { return '' !== (string) $v; });
 ?>
+<!-- FONDPP DOCUMENT LIBRARY SINGLE CONTENT LOADED -->
 <article class="wpdl-document-page wpdl-single-document wdl-single">
     <div class="wpdl-document-layout wpdl-single-document-layout">
         <?php if (has_post_thumbnail($post_id)) : ?>
@@ -105,7 +106,7 @@ $file_info_rows = array_filter([
 
             <?php
             $all_meta = get_post_meta($post_id);
-            $excluded = array('_wdl_file_id','_wdl_file_url','_wdl_version','_wdl_updated_date','_wdl_owner','_wdl_doc_number','_wdl_expiry_date','_wdl_card_description','_wdl_show_download','_wdl_pdf_viewer','_wdl_important','_wdl_new','_wdl_manual_order','_wdl_pages_count','_edit_lock','_edit_last','_thumbnail_id');
+            $excluded = array('_wdl_file_id','_wdl_file_url','_wdl_version','_wdl_updated_date','_wdl_owner','_wdl_doc_number','_wdl_expiry_date','_wdl_card_description','_wdl_show_download','_wdl_pdf_viewer','_wdl_important','_wdl_new','_wdl_manual_order','_wdl_pages_count','_edit_lock','_edit_last','_thumbnail_id','ekit_post_views_count');
             $extra_meta_rows = array();
             foreach ($all_meta as $meta_key => $values) {
                 if (in_array($meta_key, $excluded, true) || 0 === strpos($meta_key, '_') || false !== strpos($meta_key, 'elementor') || false !== strpos($meta_key, 'generate') || false !== strpos($meta_key, 'wp_')) { continue; }
