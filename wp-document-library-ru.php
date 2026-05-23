@@ -1,11 +1,14 @@
 <?php
 /**
- * Plugin Name: WP Document Library RU
- * Description: Библиотека документов для WordPress.
+ * Plugin Name: Библиотека документов Фонда
+ * Plugin URI: https://fondpp.org/
+ * Description: Кастомный плагин для публикации, просмотра и скачивания документов Фонда поддержки пострадавших от преступлений.
  * Version: 1.0.0
  * Author: Tarlykov
- * Text Domain: wp-document-library-ru
+ * Author URI: https://fondpp.org/
+ * Text Domain: fondpp-document-library
  * Domain Path: /languages
+ * Update URI: false
  */
 
 if (! defined('ABSPATH')) {
