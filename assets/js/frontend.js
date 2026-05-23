@@ -3,8 +3,8 @@ jQuery(function($){
 
     $('.wdl-library').each(function(){
         var $library = $(this);
-        var storageKey = ($library.data('view-storage-key') || 'wdl-view-library') + '-v114';
-        var defaultView = 'table';
+        var storageKey = ($library.data('view-storage-key') || 'wdl_library_view') + '_v2';
+        var defaultView = ($library.data('default-view') === 'cards') ? 'cards' : 'table';
         var savedView = null;
         try { savedView = localStorage.getItem(storageKey); } catch(e) {}
         var initialView = (savedView === 'cards' || savedView === 'table') ? savedView : defaultView;
@@ -49,21 +49,6 @@ jQuery(function($){
         if(!$toggle.length || !$wrap.length){ return; }
         $toggle.on('click', function(){
             var isOpen = $toggle.attr('aria-expanded') === 'true', nextOpen = !isOpen;
-            $toggle.attr('aria-expanded', nextOpen ? 'true' : 'false');
-            $toggle.text(nextOpen ? ($toggle.data('text-close') || 'Скрыть документ') : ($toggle.data('text-open') || 'Посмотреть документ'));
-            $wrap.prop('hidden', !nextOpen);
-        });
-    });
-
-    $('.wdl-document-viewer-section').each(function(){
-        var $section = $(this);
-        var $toggle = $section.find('.wdl-viewer-toggle').first();
-        var $wrap = $section.find('.wdl-document-viewer-wrap').first();
-        if(!$toggle.length || !$wrap.length){ return; }
-
-        $toggle.on('click', function(){
-            var isOpen = $toggle.attr('aria-expanded') === 'true';
-            var nextOpen = !isOpen;
             $toggle.attr('aria-expanded', nextOpen ? 'true' : 'false');
             $toggle.text(nextOpen ? ($toggle.data('text-close') || 'Скрыть документ') : ($toggle.data('text-open') || 'Посмотреть документ'));
             $wrap.prop('hidden', !nextOpen);
