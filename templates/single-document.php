@@ -13,7 +13,8 @@ while (have_posts()) :
     $pages_count     = get_post_meta($post_id, '_wdl_pages_count', true);
     $file_id         = absint(get_post_meta($post_id, '_wdl_file_id', true));
     $file_url_meta   = get_post_meta($post_id, '_wdl_file_url', true);
-    $file_url        = $file_id ? wp_get_attachment_url($file_id) : $file_url_meta;
+    $file_url_id     = $file_id ? wp_get_attachment_url($file_id) : '';
+    $file_url        = $file_url_id ? $file_url_id : $file_url_meta;
     $show_download   = (bool) get_post_meta($post_id, '_wdl_show_download', true);
     $thumb_width     = max(80, absint(WDL_Settings::get_option('single_thumb_width', 160)));
     $thumb_height_op = WDL_Settings::get_option('single_thumb_height', 'auto');
@@ -81,7 +82,7 @@ while (have_posts()) :
     ], static function ($v) { return '' !== (string) $v; });
     ?>
 
-<!-- WP Document Library RU single-document template loaded -->
+<!-- FONDPP DOCUMENT LIBRARY SINGLE TEMPLATE LOADED -->
     <article class="wpdl-document-page wpdl-single-document wdl-single">
         <div class="wpdl-document-layout wpdl-single-document-layout">
             <?php if (has_post_thumbnail($post_id)) : ?>
@@ -157,7 +158,11 @@ while (have_posts()) :
                 );
                 $extra_meta_rows = array();
                 foreach ($all_meta as $meta_key => $values) {
-                    if (in_array($meta_key, $excluded, true) || strpos($meta_key, '_wdl_') !== 0) {
+                    if (in_array($meta_key, $excluded, true)) {
+                        continue;
+                    }
+
+                    if (0 === strpos($meta_key, '_') || false !== strpos($meta_key, 'elementor') || false !== strpos($meta_key, 'generate') || false !== strpos($meta_key, 'wp_')) {
                         continue;
                     }
                     $value = isset($values[0]) ? maybe_unserialize($values[0]) : '';
