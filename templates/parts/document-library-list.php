@@ -4,6 +4,7 @@ $default_view = ! empty($data['atts']['view']) ? (string) $data['atts']['view'] 
 $default_view = in_array($default_view, array('table','cards'), true) ? $default_view : 'table';
 $show_search = isset($data['atts']['show_search']) ? (string) $data['atts']['show_search'] : 'yes';
 ?>
+<!-- WDL LIBRARY PARTIAL VERSION 1.1.6 -->
 <div class="wdl-library" data-default-view="<?php echo esc_attr($default_view); ?>" data-view-storage-key="wdl-view-<?php echo is_tax('wdl_document_category') ? 'category' : 'library'; ?>">
     <div class="wdl-library-toolbar">
         <?php if ('yes' === $show_search) : ?>

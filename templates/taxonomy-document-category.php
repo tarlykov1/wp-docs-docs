@@ -38,8 +38,11 @@ $data = array(
     'helpers' => WDL_Plugin::get_instance()->helpers,
 );
 ?>
-<main id="primary" class="site-main wdl-taxonomy-page">
-    <div class="wdl-library-container">
+<div id="primary" class="content-area wdl-taxonomy-page">
+    <main id="main" class="site-main">
+        <article class="inside-article">
+            <div class="entry-content wdl-library-container">
+                <!-- WDL CATEGORY TEMPLATE VERSION 1.1.6 -->
         <nav class="wdl-breadcrumbs" aria-label="Хлебные крошки">
             <a href="<?php echo esc_url($library_url); ?>">Библиотека документов</a> / <?php echo esc_html($term->name); ?>
         </nav>
@@ -49,9 +52,11 @@ $data = array(
             <?php if (! empty($term->description)) : ?><div class="wdl-taxonomy-description"><?php echo wp_kses_post(wpautop($term->description)); ?></div><?php endif; ?>
         </header>
 
-        <?php include WDL_PLUGIN_DIR . 'templates/parts/document-library-list.php'; ?>
-    </div>
-</main>
+                <?php include WDL_PLUGIN_DIR . 'templates/parts/document-library-list.php'; ?>
+            </div>
+        </article>
+    </main>
+</div>
 <?php
 wp_reset_postdata();
 get_footer();
