@@ -3,7 +3,7 @@ if (! defined('ABSPATH')) { exit; }
 class WDL_Frontend {
     private static $bootstrapped = false;
     private $helpers; private $settings;
-    public function __construct($helpers,$settings){$this->helpers=$helpers;$this->settings=$settings; add_action('wp_enqueue_scripts',array($this,'assets'));  add_filter('template_include',array($this,'single_template'),99); add_filter('template_include',array($this,'taxonomy_template'),98); add_filter('the_content',array($this,'single_content_fallback'),20); add_action('template_redirect',array($this,'disable_generatepress_single_bits')); add_filter('generate_show_entry_header',array($this,'hide_generatepress_entry_header')); add_filter('generate_show_title',array($this,'hide_generatepress_title')); add_filter('generate_show_post_image',array($this,'hide_generatepress_featured_image')); add_filter('generate_featured_image_output',array($this,'hide_generatepress_featured_image_output')); add_action('wp_footer',array($this,'debug_post_type_comment')); }
+    public function __construct($helpers,$settings){$this->helpers=$helpers;$this->settings=$settings; add_action('wp_enqueue_scripts',array($this,'assets'));  add_filter('template_include',array($this,'single_template'),99); add_filter('template_include',array($this,'taxonomy_template'),98); add_filter('the_content',array($this,'single_content_fallback'),20); add_action('template_redirect',array($this,'disable_generatepress_single_bits')); add_filter('generate_show_entry_header',array($this,'hide_generatepress_entry_header')); add_filter('generate_show_title',array($this,'hide_generatepress_title')); add_filter('generate_show_post_image',array($this,'hide_generatepress_featured_image')); add_filter('generate_featured_image_output',array($this,'hide_generatepress_featured_image_output')); }
     public function assets(){ wp_enqueue_style('wdl-frontend',WDL_PLUGIN_URL.'assets/css/frontend.css',array(),WDL_PLUGIN_VERSION); wp_enqueue_script('wdl-frontend',WDL_PLUGIN_URL.'assets/js/frontend.js',array('jquery'),WDL_PLUGIN_VERSION,true); }
 
     public function single_template($template){
@@ -109,22 +109,8 @@ class WDL_Frontend {
         if ($this->is_document_post_type(get_post_type($post_id))) {
             return true;
         }
-
-        $file_id = (string) get_post_meta($post_id, '_wdl_file_id', true);
-        $file_url = (string) get_post_meta($post_id, '_wdl_file_url', true);
-        return $file_id !== '' || $file_url !== '';
+        return false;
     }
-
-    public function debug_post_type_comment(){
-        if (! is_singular()) {
-            return;
-        }
-
-        echo "
-<!-- FONDPP DEBUG post_type: " . esc_html((string) get_post_type()) . " -->
-";
-    }
-
     public static function init(){
         if (self::$bootstrapped) {
             return;

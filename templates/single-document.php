@@ -1,18 +1,24 @@
-<!-- FONDPP SINGLE DOCUMENT TEMPLATE FILE LOADED 1.0.8 -->
 <?php
+defined('ABSPATH') || exit;
+
 get_header();
+
+echo '<!-- WDL SINGLE DOCUMENT TEMPLATE LOADED -->';
 ?>
-<!-- FONDPP DOCUMENT LIBRARY SINGLE TEMPLATE LOADED -->
-
-<main id="primary" class="site-main fondpp-document-single-page">
-    <div class="inside-article fondpp-document-single-container">
-        <?php
-        include plugin_dir_path(dirname(__FILE__)) . 'templates/parts/single-document-content.php';
-        ?>
-    </div>
-</main>
-
-<?php get_sidebar(); ?>
-
+<div id="primary" class="content-area">
+    <main id="main" class="site-main">
+        <div class="wdl-single-document-page">
+            <?php
+            $partial = plugin_dir_path(__FILE__) . 'parts/single-document-content.php';
+            if (file_exists($partial)) {
+                include $partial;
+            } else {
+                echo '<p>Шаблон документа не найден.</p>';
+            }
+            ?>
+        </div>
+    </main>
+</div>
 <?php
+get_sidebar();
 get_footer();
