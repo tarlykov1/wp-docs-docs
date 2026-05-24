@@ -31,6 +31,7 @@ $query_args = array(
     ),
 );
 $q = new WP_Query($query_args);
+$has_documents = $q->have_posts();
 
 $data = array(
     'query' => $q,
@@ -52,7 +53,11 @@ $data = array(
             <?php if (! empty($term->description)) : ?><div class="wdl-taxonomy-description"><?php echo wp_kses_post(wpautop($term->description)); ?></div><?php endif; ?>
         </header>
 
-                <?php include WDL_PLUGIN_DIR . 'templates/parts/document-library-list.php'; ?>
+                <?php if ($has_documents) : ?>
+                    <?php include WDL_PLUGIN_DIR . 'templates/parts/document-library-list.php'; ?>
+                <?php else : ?>
+                    <div class="wdl-empty wdl-category-empty">В этой категории пока нет документов.</div>
+                <?php endif; ?>
             </div>
         </article>
     </main>
