@@ -3,7 +3,7 @@
  * Plugin Name: Библиотека документов Фонда
  * Plugin URI: https://fondpp.org/
  * Description: Кастомный плагин для публикации, просмотра и скачивания документов Фонда поддержки пострадавших от преступлений.
- * Version: 1.1.3
+ * Version: 1.1.5
  * Author: Tarlykov
  * Author URI: https://fondpp.org/
  * Text Domain: fondpp-document-library
@@ -15,7 +15,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('WDL_PLUGIN_VERSION', '1.1.3');
+define('WDL_PLUGIN_VERSION', '1.1.5');
 define('WDL_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WDL_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('WDL_PLUGIN_FILE', __FILE__);
@@ -29,42 +29,33 @@ if (class_exists('WDL_Frontend')) {
     WDL_Frontend::init();
 }
 
-add_action('wp_footer', function () {
-    echo "\n<!-- FONDPP ACTIVE PLUGIN REALLY LOADED 1.0.8 -->\n";
-}, 9999);
+add_filter('template_include', 'wdl_force_document_single_template', PHP_INT_MAX);
 
-add_action('template_redirect', function () {
-    if (! current_user_can('manage_options')) {
-        return;
+function wdl_force_document_single_template($template)
+{
+    if (is_admin() || ! is_singular()) {
+        return $template;
     }
 
-    if (! isset($_GET['fondpp_force_template'])) {
-        return;
+    $post_id = get_queried_object_id();
+    if (! $post_id) {
+        return $template;
     }
 
-    get_header();
+    $post_type = get_post_type($post_id);
+    $document_post_types = array('wdl_document');
 
-    echo '<main style="padding:40px;max-width:900px;margin:0 auto;">';
-    echo '<h1>FONDPP FORCE TEMPLATE WORKS</h1>';
-    echo '<p>Если этот текст виден, активный плагин может перехватить фронт.</p>';
-    echo '<p>Post ID: ' . esc_html((string) get_queried_object_id()) . '</p>';
-    echo '<p>Post type: ' . esc_html((string) get_post_type(get_queried_object_id())) . '</p>';
-    echo '</main>';
+    $request_uri = isset($_SERVER['REQUEST_URI'])
+        ? sanitize_text_field(wp_unslash($_SERVER['REQUEST_URI']))
+        : '';
+    $is_document_url = strpos($request_uri, '/documents/') !== false;
 
-    get_footer();
-    exit;
-}, 0);
-
-add_filter('template_include', function ($template) {
-    $request_uri = isset($_SERVER['REQUEST_URI']) ? sanitize_text_field(wp_unslash($_SERVER['REQUEST_URI'])) : '';
-
-    if (strpos($request_uri, '/documents/bezopasnoe-dolgoletie/') !== false) {
-        $plugin_template = plugin_dir_path(__FILE__) . 'templates/single-document.php';
-
+    if (in_array($post_type, $document_post_types, true) || $is_document_url) {
+        $plugin_template = WDL_PLUGIN_DIR . 'templates/single-document.php';
         if (file_exists($plugin_template)) {
             return $plugin_template;
         }
     }
 
     return $template;
-}, 9999);
+}

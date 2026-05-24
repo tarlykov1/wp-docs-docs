@@ -1,10 +1,14 @@
 <?php
 if (! defined('ABSPATH')) exit;
-$post_id = get_the_ID() ?: get_queried_object_id();
+$post_id = get_queried_object_id();
+if (! $post_id) {
+    $post_id = get_the_ID();
+}
 if (! $post_id) { return; }
 
 $file_id = absint(get_post_meta($post_id, '_wdl_file_id', true));
-$file_url = (string) ($file_id ? wp_get_attachment_url($file_id) : get_post_meta($post_id, '_wdl_file_url', true));
+$raw_file_url = (string) ($file_id ? wp_get_attachment_url($file_id) : get_post_meta($post_id, '_wdl_file_url', true));
+$file_url = str_replace('http://fondpp.org/', 'https://fondpp.org/', $raw_file_url);
 $description = (string) get_post_meta($post_id, '_wdl_card_description', true);
 $summary = $description ?: (has_excerpt($post_id) ? (string) get_the_excerpt($post_id) : '');
 $helpers = WDL_Plugin::get_instance()->helpers;
@@ -59,7 +63,8 @@ $crumbs[] = esc_html(get_the_title($post_id));
                     <dl><?php foreach ($file_info_rows as $label => $value) : ?><div class="wpdl-document-meta-row wdl-info-row"><dt><?php echo esc_html($label); ?></dt><dd><?php echo esc_html($value); ?></dd></div><?php endforeach; ?></dl>
                 </section>
             <?php endif; ?>
-            <?php if ($file_url !== '') : ?><div class="wpdl-document-actions wpdl-single-document-actions"><a href="<?php echo esc_url($file_url); ?>" download class="wdl-btn wdl-btn-primary">Скачать</a><a href="<?php echo esc_url($file_url); ?>" target="_blank" rel="noopener noreferrer" class="wdl-btn wdl-btn-outline-primary">Открыть</a></div><?php endif; ?>
+            <?php $show_download = $helpers->is_truthy(get_post_meta($post_id, '_wdl_show_download', true)); ?>
+            <?php if ($file_url !== '') : ?><div class="wpdl-document-actions wpdl-single-document-actions"><?php if ($show_download) : ?><a href="<?php echo esc_url($file_url); ?>" download class="wdl-btn wdl-btn-primary">Скачать</a><?php endif; ?><a href="<?php echo esc_url($file_url); ?>" target="_blank" rel="noopener noreferrer" class="wdl-btn wdl-btn-outline-primary">Открыть</a></div><?php endif; ?>
         </div>
     </div>
 </article>
