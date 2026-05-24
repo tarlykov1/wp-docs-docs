@@ -14,8 +14,11 @@
             $size_label = size_format(filesize($file_path));
         }
     }
+    $manual_order = get_post_meta(get_the_ID(), '_wdl_manual_order', true);
+    $manual_order = ($manual_order === '' || $manual_order === null) ? 999999 : absint($manual_order);
+    $file_size = ($file_id && ! empty($file_path) && file_exists($file_path)) ? (int) filesize($file_path) : 0;
     ?>
-    <article class="wdl-document-card wdl-item" data-search="<?php echo esc_attr(strtolower(trim(get_the_title() . ' ' . $description . ' ' . $ext . ' ' . $size_label))); ?>" data-wdl-item data-title="<?php echo esc_attr(get_the_title()); ?>" data-summary="<?php echo esc_attr($description); ?>">
+    <article class="wdl-document-card wdl-item wdl-document-item" data-doc-id="<?php echo esc_attr(get_the_ID()); ?>" data-search="<?php echo esc_attr(strtolower(trim(get_the_title() . ' ' . $description . ' ' . $ext . ' ' . $size_label))); ?>" data-wdl-item data-title="<?php echo esc_attr(get_the_title()); ?>" data-summary="<?php echo esc_attr($description); ?>" data-date="<?php echo esc_attr(get_the_date('Y-m-d')); ?>" data-order="<?php echo esc_attr($manual_order); ?>" data-file-size="<?php echo esc_attr($file_size); ?>" data-file-type="<?php echo esc_attr(strtolower($ext)); ?>">
         <div class="wdl-card-top">
             <div class="wdl-card-thumb"><a class="wdl-doc-thumb-link" href="<?php echo esc_url(get_permalink()); ?>"><?php echo $data['helpers']->get_thumb_or_icon(get_the_ID(), $u, 'medium'); ?></a></div>
             <?php if ($show_download_catalog && $u) : ?><a class="wdl-button wdl-button-download wdl-button-small" href="<?php echo esc_url($u); ?>" target="_blank" rel="noopener">Скачать</a><?php endif; ?>

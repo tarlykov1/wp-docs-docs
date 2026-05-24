@@ -3,7 +3,7 @@
  * Plugin Name: Библиотека документов Фонда
  * Plugin URI: https://fondpp.org/
  * Description: Кастомный плагин для публикации, просмотра и скачивания документов Фонда поддержки пострадавших от преступлений.
- * Version: 1.1.5
+ * Version: 1.1.7
  * Author: Tarlykov
  * Author URI: https://fondpp.org/
  * Text Domain: fondpp-document-library
@@ -15,7 +15,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('WDL_PLUGIN_VERSION', '1.1.5');
+define('WDL_PLUGIN_VERSION', '1.1.7');
 define('WDL_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WDL_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('WDL_PLUGIN_FILE', __FILE__);
