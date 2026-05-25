@@ -8,13 +8,8 @@ if (! ($term instanceof WP_Term) || 'wdl_document_category' !== $term->taxonomy)
     return;
 }
 
-$library_page_id = absint(WDL_Settings::get_option('wdl_library_page_id', 0));
-$library_url = $library_page_id ? get_permalink($library_page_id) : '';
-if (! $library_url) {
-    $pages = get_posts(array('post_type' => 'page','post_status' => 'publish','posts_per_page' => 1,'fields' => 'ids','s' => '[document_library]'));
-    if (! empty($pages)) { $library_url = get_permalink((int) $pages[0]); }
-}
-if (! $library_url) { $library_url = home_url('/biblioteka-fonda/'); }
+$helpers = WDL_Plugin::get_instance()->helpers;
+$library_url = $helpers->get_library_page_url();
 
 $query_args = array(
     'post_type' => 'wdl_document',
@@ -44,9 +39,7 @@ $data = array(
         <article class="inside-article">
             <div class="entry-content wdl-library-container">
                 <!-- WDL TAXONOMY DOCUMENT CATEGORY TEMPLATE LOADED -->
-        <nav class="wdl-breadcrumbs" aria-label="Хлебные крошки">
-            <a href="<?php echo esc_url($library_url); ?>">Библиотека документов</a> / <?php echo esc_html($term->name); ?>
-        </nav>
+        <?php $helpers->render_breadcrumbs(array(array('label' => 'Библиотека документов', 'url' => $library_url), array('label' => $term->name))); ?>
 
         <header class="wdl-taxonomy-header">
             <h1 class="wdl-taxonomy-title"><?php echo esc_html($term->name); ?></h1>

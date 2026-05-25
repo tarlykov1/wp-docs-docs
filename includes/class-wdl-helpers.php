@@ -21,4 +21,44 @@ class WDL_Helpers {
         if($fallback){ return '<img src="'.esc_url($fallback).'" class="wdl-document-thumbnail wdl-document-thumbnail-fallback" alt="" loading="lazy">'; }
         return '<span class="wdl-document-icon '.esc_attr($this->get_icon_class($this->get_file_ext($url))).'">'.esc_html(strtoupper($this->get_file_ext($url) ?: 'FILE')).'</span>';
     }
+
+    public function get_library_page_url(){
+        $library_page_id = absint(WDL_Settings::get_option('wdl_library_page_id', 0));
+        $library_url = $library_page_id ? get_permalink($library_page_id) : '';
+
+        if (! $library_url) {
+            $pages = get_posts(array('post_type' => 'page', 'post_status' => 'publish', 'posts_per_page' => 1, 'fields' => 'ids', 's' => '[document_library]'));
+            if (! empty($pages)) {
+                $library_url = get_permalink((int) $pages[0]);
+            }
+        }
+
+        if (! $library_url) {
+            $library_url = home_url('/biblioteka-fonda/');
+        }
+
+        return (string) $library_url;
+    }
+
+    public function get_primary_document_category($post_id){
+        $terms = wp_get_object_terms((int) $post_id, 'wdl_document_category', array('orderby' => 'term_order', 'order' => 'ASC'));
+        if (is_wp_error($terms) || empty($terms)) {
+            return null;
+        }
+
+        $term = reset($terms);
+        return $term instanceof WP_Term ? $term : null;
+    }
+
+    public function render_breadcrumbs($items){
+        $items = is_array($items) ? array_values(array_filter($items, static function($item){
+            return is_array($item) && ! empty($item['label']);
+        })) : array();
+
+        if (empty($items)) {
+            return;
+        }
+
+        include WDL_PLUGIN_DIR . 'templates/parts/breadcrumbs.php';
+    }
 }

@@ -23,27 +23,23 @@ $content_raw = (string) get_post_field('post_content', $post_id);
 $document_content = wpautop(do_shortcode($content_raw));
 $has_document_content = ! empty(trim(wp_strip_all_tags($document_content)));
 
-$library_page_id = absint(WDL_Settings::get_option('wdl_library_page_id', 0));
-$library_url = $library_page_id ? get_permalink($library_page_id) : '';
-if (! $library_url) {
-    $pages = get_posts(array('post_type' => 'page','post_status' => 'publish','posts_per_page' => 1,'fields' => 'ids','s' => '[document_library]'));
-    if (! empty($pages)) { $library_url = get_permalink((int) $pages[0]); }
-}
-if (! $library_url) { $library_url = home_url('/biblioteka-fonda/'); }
+$library_url = $helpers->get_library_page_url();
+$primary_category = $helpers->get_primary_document_category($post_id);
 
-$terms = get_the_terms($post_id, 'wdl_document_category');
-$crumbs = array('<a href="' . esc_url($library_url) . '">Библиотека документов</a>');
-if (! is_wp_error($terms) && ! empty($terms)) {
-    $term = array_shift($terms);
-    foreach (array_reverse(get_ancestors($term->term_id, 'wdl_document_category')) as $aid) {
-        $at = get_term($aid, 'wdl_document_category');
-        if ($at && ! is_wp_error($at)) { $crumbs[] = '<a href="' . esc_url(get_term_link($at)) . '">' . esc_html($at->name) . '</a>'; }
-    }
-    $crumbs[] = '<a href="' . esc_url(get_term_link($term)) . '">' . esc_html($term->name) . '</a>';
+$breadcrumbs = array(
+    array('label' => 'Библиотека документов', 'url' => $library_url),
+);
+
+if ($primary_category instanceof WP_Term) {
+    $breadcrumbs[] = array(
+        'label' => $primary_category->name,
+        'url' => get_term_link($primary_category),
+    );
 }
-$crumbs[] = esc_html(get_the_title($post_id));
+
+$breadcrumbs[] = array('label' => get_the_title($post_id));
+$helpers->render_breadcrumbs($breadcrumbs);
 ?>
-<nav class="wdl-breadcrumbs" aria-label="Хлебные крошки"><?php echo wp_kses_post(implode(' / ', $crumbs)); ?></nav>
 
 <article class="wpdl-document-page wpdl-single-document wdl-single">
     <div class="wpdl-document-layout wpdl-single-document-layout">
