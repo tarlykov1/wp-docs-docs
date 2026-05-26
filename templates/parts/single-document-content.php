@@ -38,10 +38,10 @@ if ($primary_category instanceof WP_Term) {
 }
 
 $breadcrumbs[] = array('label' => get_the_title($post_id));
-$helpers->render_breadcrumbs($breadcrumbs);
 ?>
 
 <article class="wpdl-document-page wpdl-single-document wdl-single">
+    <?php $helpers->render_breadcrumbs($breadcrumbs); ?>
     <div class="wpdl-document-layout wpdl-single-document-layout">
         <div class="wpdl-document-thumbnail wpdl-single-document-thumbnail"><?php echo wp_kses_post($helpers->get_thumb_or_icon($post_id, $file_url, 'medium')); ?></div>
         <div class="wpdl-document-content wpdl-single-document-content">
