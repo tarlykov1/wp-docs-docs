@@ -17,13 +17,15 @@ class WDL_Meta_Boxes {
         if(isset($_POST['wdl_file_url'])) update_post_meta($post_id,'_wdl_file_url',esc_url_raw(wp_unslash($_POST['wdl_file_url'])));
         update_post_meta($post_id,'_wdl_manual_order',isset($_POST['wdl_manual_order'])?absint($_POST['wdl_manual_order']):0);
         foreach(['pdf_viewer','show_download','important','new'] as $c){ update_post_meta($post_id,'_wdl_'.$c,isset($_POST['wdl_'.$c])?1:0); }
-                $term_id = isset($_POST['wdl_document_category']) ? absint($_POST['wdl_document_category']) : 0;
-        $term_exists = $term_id > 0 ? term_exists($term_id, self::DOCUMENT_CATEGORY_TAXONOMY) : 0;
+                if (array_key_exists('wdl_document_category', $_POST)) {
+            $term_id = absint(wp_unslash($_POST['wdl_document_category']));
+            $term_exists = $term_id > 0 ? term_exists($term_id, self::DOCUMENT_CATEGORY_TAXONOMY) : 0;
 
-        if ($term_id > 0 && $term_exists) {
-            wp_set_object_terms($post_id, array($term_id), self::DOCUMENT_CATEGORY_TAXONOMY, false);
-        } else {
-            wp_set_object_terms($post_id, array(), self::DOCUMENT_CATEGORY_TAXONOMY, false);
+            if ($term_id > 0 && $term_exists) {
+                wp_set_object_terms($post_id, array($term_id), self::DOCUMENT_CATEGORY_TAXONOMY, false);
+            } else {
+                wp_set_object_terms($post_id, array(), self::DOCUMENT_CATEGORY_TAXONOMY, false);
+            }
         }
     }
 }
