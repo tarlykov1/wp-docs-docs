@@ -273,7 +273,7 @@
     margin-bottom: 2px;
   }
 
-  .wdl-document-table .wdl-doc-thumb {
+.wdl-document-table .wdl-doc-thumb {
     margin-bottom: 8px;
   }
 
@@ -282,6 +282,31 @@
     margin-bottom: 8px;
   }
 
+}
+
+/* v1.2.6: larger thumbnails in card view only */
+.wdl-documents-grid .wdl-document-thumb,
+.wdl-cards .wdl-card-thumb {
+  width: 200px;
+  max-width: 100%;
+}
+
+.wdl-documents-grid .wdl-document-thumb img,
+.wdl-cards .wdl-card-thumb img,
+.wdl-cards .wdl-card-thumb .attachment-post-thumbnail,
+.wdl-cards .wdl-card-thumb .attachment-medium {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 720px) {
+  .wdl-documents-grid .wdl-document-thumb,
+  .wdl-cards .wdl-card-thumb {
+    width: min(100%, 170px);
+  }
 }
 
 /* v1.2.2 single document UI refinements */

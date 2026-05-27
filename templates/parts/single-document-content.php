@@ -67,6 +67,15 @@ $breadcrumbs[] = array('label' => get_the_title($post_id));
 
 <?php if ($show_pdf && $file_url !== '' && $helpers->is_pdf($file_url)) : ?>
 <section class="wdl-document-viewer-section">
-    <iframe src="<?php echo esc_url($file_url); ?>" class="wdl-pdf-viewer" loading="lazy"></iframe>
+    <button
+        type="button"
+        class="wdl-btn wdl-btn-secondary wdl-viewer-toggle"
+        aria-expanded="false"
+        data-text-open="Посмотреть документ"
+        data-text-close="Скрыть документ"
+    >Посмотреть документ</button>
+    <div class="wdl-document-viewer-wrap" hidden>
+        <iframe src="<?php echo esc_url($file_url); ?>" class="wdl-pdf-viewer" loading="lazy"></iframe>
+    </div>
 </section>
 <?php endif; ?>
